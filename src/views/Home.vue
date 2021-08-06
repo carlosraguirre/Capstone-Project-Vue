@@ -11,7 +11,7 @@
       <br>
     </div>
     <div v-for ="restaurant in restaurants">
-      <p>{{ restaurant }}</p>
+      <p>{{ restaurant.restaurant_name }}</p>
       <br>
       <hr />
       <hr />
