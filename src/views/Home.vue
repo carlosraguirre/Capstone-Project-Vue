@@ -2,8 +2,11 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <div v-for="restaurantList in restaurantLists">
-      <p>{{ restaurantList.user_list_id.list_name }}</p>
-      <p>{{ restaurantList.restaurant_id.restaurant_name }}</p>
+      <p>{{ restaurantList.user_list.list_name }}</p>
+      <!-- <p>{{ restaurantList.restaurant_id.restaurant_name }}</p> -->
+      <br>
+      <hr />
+      <br>
     </div>
   </div>
 
