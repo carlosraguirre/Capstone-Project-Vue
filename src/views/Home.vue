@@ -19,11 +19,23 @@
       <hr />
       <hr />
     </div>
+    <!-- <div id="home">
+      <SearchBar />
+    </div> -->
   </div>
 
 </template>
 
-<style></style>
+<style>
+/* import SearchBar from '@/components/SearchBar.vue'
+
+export default {
+  name: "home",
+  components: {
+    SearchBar
+  }
+}; */
+</style>
 
 <script>
   import axios from 'axios'
