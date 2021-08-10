@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <div><p>List Name: <input type="text" v-model="newUserList.list_name"></p>
+    <button v-on:click="createUserList()"> Create new list</button>
+    </div>
     <div v-for="restaurantList in restaurantLists">
       <p>{{ restaurantList.user_list.list_name }}</p>
       <!-- <p>{{ restaurantList }}</p> -->
@@ -29,13 +32,16 @@
       return {
         message: "YummyList",
         restaurantLists: {},
-        restaurants: {}
+        restaurants: {},
+        newUserList: {},
+        userLists: []
 
       }
     },
     created: function () {
       this.indexRestaurantLists();
       this.indexRestaurants();
+      this.createUserList() ;
     },
     methods: {
       indexRestaurantLists: function() {
@@ -51,7 +57,15 @@
           console.log(response.data);
           this.restaurants = response.data
         });
+      },
+      createUserList: function () {
+        console.log("create new list")
+        axios.post("/user_lists", this.newUserList).then(response => {
+          console.log(response.data);
+          this.userLists.push(response.data);
+          this.newUserList={};
+        }); 
       }
-    },
+    }
   };
 </script>
