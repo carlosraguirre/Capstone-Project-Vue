@@ -4,38 +4,23 @@
     <div><p>List Name: <input type="text" v-model="newUserList.list_name"></p>
     <button v-on:click="createUserList()"> Create new list</button>
     </div>
-    <div v-for="restaurantList in restaurantLists">
-      <p>{{ restaurantList.user_list.list_name }}</p>
-      <!-- <p>{{ restaurantList }}</p> -->
-      <!-- <p>{{ restaurantList.restaurant_id.restaurant_name }}</p> -->
+    <br>
+    <hr />    
+    <div v-for="userList in userLists">
+      <p>{{ userList.list_name }}</p>
+      <div v-for="restaurant in restaurants">
+        <p>{{ restaurant.restaurant_name }}</p>
+      </div>
       <br>
-      <!-- <button v-on:click="showRestaurant()"> -->
-      <hr />
-      <br>
-    </div>
-    <div v-for ="restaurant in restaurants">
-      <p>{{ restaurant.restaurant_name }}</p>
-      <br>
-      <hr />
-      <hr />
-    </div>
-    <!-- <div id="home">
-      <SearchBar />
-    </div> -->
-  </div>
+      <hr />      
 
+      <!-- render restaurants inside of backend user_lists index action/show 
+      fornt end just render userlists  -->
+    </div>    
+  </div>
 </template>
 
-<style>
-/* import SearchBar from '@/components/SearchBar.vue'
-
-export default {
-  name: "home",
-  components: {
-    SearchBar
-  }
-}; */
-</style>
+<style></style>
 
 <script>
   import axios from 'axios'
@@ -44,16 +29,15 @@ export default {
       return {
         message: "YummyList",
         restaurantLists: {},
-        restaurants: {},
-        newUserList: {},
-        userLists: []
-
+        newUserList: [],
+        userLists: {},
+        restaurants: {},        
       }
     },
     created: function () {
       this.indexRestaurantLists();
+      this.indexUserLists();
       this.indexRestaurants();
-      this.createUserList() ;
     },
     methods: {
       indexRestaurantLists: function() {
@@ -63,21 +47,27 @@ export default {
           this.restaurantLists = response.data
         });
       },
-      indexRestaurants: function() {
+      createUserList: function () {
+        console.log("create new list")
+        axios.post("/user_lists", this.newUserList).then(response => {
+          console.log(response.data);
+          this.newUserList = response.data
+        }); 
+      },
+      indexUserLists: function() {
+        console.log('indexing user lists')
+        axios.get("/user_lists").then(response => {
+          console.log(response.data);
+          this.userLists = response.data
+        });
+      },
+       indexRestaurants: function() {
         console.log('indexing restaurants')
         axios.get("/restaurants").then(response => {
           console.log(response.data);
           this.restaurants = response.data
         });
-      },
-      createUserList: function () {
-        console.log("create new list")
-        axios.post("/user_lists", this.newUserList).then(response => {
-          console.log(response.data);
-          this.userLists.push(response.data);
-          this.newUserList={};
-        }); 
-      }
+      },                 
     }
   };
 </script>
