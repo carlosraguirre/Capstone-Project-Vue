@@ -1,21 +1,28 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <div><p>List Name: <input type="text" v-model="newUserList.list_name"></p>
+    <div><p>List Name: <input type="text" v-model="newListName.list_name"></p>
     <button v-on:click="createUserList()"> Create new list</button>
     </div>
     <br>
-    <hr />    
-    <div v-for="userList in userLists">
-      <p>{{ userList.list_name }}</p>
-      <div v-for="restaurant in restaurants">
-        <p>{{ restaurant.restaurant_name }}</p>
-      </div>
-      <br>
-      <hr />      
+    <hr /> 
+    <!-- {{ restaurants.data[0].restaurant_name }}    -->
+    <!-- <div v-for="userList in listNames">
+      <p>{{ userList.list_name }}</p> -->
+    
+    <div v-for="list in listNames">
+      <p>{{ list.list_name }}</p>
+    </div>    
+    <br>
+    <hr />
+    <div v-for="restaurant in restaurants.data">
+      <p>{{ restaurant.restaurant_name }}</p>
+    </div>
+    <br>
+    <hr />      
 
       <!-- render restaurants inside of backend user_lists index action/show 
-      fornt end just render userlists  -->
+      fornt end just render listNames  -->
     </div>    
   </div>
 </template>
@@ -29,14 +36,14 @@
       return {
         message: "YummyList",
         restaurantLists: {},
-        newUserList: [],
-        userLists: {},
+        newListName: [],
+        listNames: {},
         restaurants: {},        
       }
     },
     created: function () {
       this.indexRestaurantLists();
-      this.indexUserLists();
+      this.indexlistNames();
       this.indexRestaurants();
     },
     methods: {
@@ -49,16 +56,16 @@
       },
       createUserList: function () {
         console.log("create new list")
-        axios.post("/user_lists", this.newUserList).then(response => {
+        axios.post("/user_lists", this.newListName).then(response => {
           console.log(response.data);
-          this.newUserList = response.data
+          this.newListName = response.data
         }); 
       },
-      indexUserLists: function() {
+      indexlistNames: function() {
         console.log('indexing user lists')
-        axios.get("/user_lists").then(response => {
+        axios.get("/list_names").then(response => {
           console.log(response.data);
-          this.userLists = response.data
+          this.listNames = response.data
         });
       },
        indexRestaurants: function() {
