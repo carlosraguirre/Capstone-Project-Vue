@@ -2,20 +2,16 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <div><p>List Name: <input type="text" v-model="newListName.list_name"></p>
-    <button v-on:click="createUserList()"> Create new list</button>
+    <button v-on:click="createListName()"> Create new list</button>
     </div>
     <br>
-    <hr /> 
-    <!-- {{ restaurants.data[0].restaurant_name }}    -->
-    <!-- <div v-for="userList in listNames">
-      <p>{{ userList.list_name }}</p> -->
-    
+    <hr />     
     <div v-for="list in listNames">
       <p>{{ list.list_name }}</p>
     </div>    
     <br>
     <hr />
-    <div v-for="restaurant in restaurants.data">
+    <div v-for="restaurant in restaurants">
       <p>{{ restaurant.restaurant_name }}</p>
     </div>
     <br>
@@ -36,7 +32,7 @@
       return {
         message: "YummyList",
         restaurantLists: {},
-        newListName: [],
+        newListName: {},
         listNames: {},
         restaurants: {},        
       }
@@ -54,11 +50,12 @@
           this.restaurantLists = response.data
         });
       },
-      createUserList: function () {
+      createListName: function () {
         console.log("create new list")
-        axios.post("/user_lists", this.newListName).then(response => {
+        console.log(this.newListName)
+        axios.post("/list_names", this.newListName).then(response => {
           console.log(response.data);
-          this.newListName = response.data
+          this.newListName = {}
         }); 
       },
       indexlistNames: function() {
