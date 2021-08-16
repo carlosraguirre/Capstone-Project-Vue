@@ -10,15 +10,7 @@
       <p>{{ list.list_name }}</p>
     </div>    
     <br>
-    <hr />
-    <div v-for="restaurant in restaurants">
-      <p>{{ restaurant.restaurant_name }}</p>
-    </div>
-    <br>
-    <hr />      
-
-      <!-- render restaurants inside of backend user_lists index action/show 
-      fornt end just render listNames  -->
+    <hr />     
     </div>    
   </div>
 </template>
@@ -33,23 +25,13 @@
         message: "YummyList",
         restaurantLists: {},
         newListName: {},
-        listNames: {},
-        restaurants: {},        
+        listNames: {},      
       }
     },
     created: function () {
-      this.indexRestaurantLists();
       this.indexlistNames();
-      this.indexRestaurants();
     },
     methods: {
-      indexRestaurantLists: function() {
-        console.log('indexing restaurant lists')
-        axios.get("/restaurant_lists").then(response => {
-          console.log(response.data);
-          this.restaurantLists = response.data
-        });
-      },
       createListName: function () {
         console.log("create new list")
         console.log(this.newListName)
@@ -64,14 +46,7 @@
           console.log(response.data);
           this.listNames = response.data
         });
-      },
-       indexRestaurants: function() {
-        console.log('indexing restaurants')
-        axios.get("/restaurants").then(response => {
-          console.log(response.data);
-          this.restaurants = response.data
-        });
-      },                 
+      },                
     }
   };
 </script>
