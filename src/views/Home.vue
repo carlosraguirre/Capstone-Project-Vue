@@ -23,9 +23,8 @@
     data: function () {
       return {
         message: "YummyList",
-        restaurantLists: {},
         newListName: {},
-        listNames: {},      
+        listNames: [],     
       }
     },
     created: function () {
@@ -33,10 +32,9 @@
     },
     methods: {
       createListName: function () {
-        console.log("create new list")
-        console.log(this.newListName)
         axios.post("/list_names", this.newListName).then(response => {
-          console.log(response.data);
+          console.log("create list", response);
+          this.listNames.push(response.data);
           this.newListName = {}
         }); 
       },
