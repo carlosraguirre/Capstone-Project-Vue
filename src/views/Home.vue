@@ -8,7 +8,7 @@
     <hr />     
     <div v-for="list in listNames">
       <p>{{ list.list_name }}</p>
-    </div>    
+    </div> 
     <br>
     <hr />     
     </div>    
