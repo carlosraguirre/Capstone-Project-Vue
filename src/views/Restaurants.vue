@@ -3,9 +3,9 @@
     <h1>{{ message }}</h1>
     <div v-for ="restaurant in restaurants">
       <p>{{ restaurant.restaurant_name }}</p>
-      <p>{{ restaurant.address }}</p>
+      <!-- <p>{{ restaurant.address }}</p>
       <p>{{ restaurant.longitude }}</p>
-      <p>{{ restaurant.latitude }}</p>
+      <p>{{ restaurant.latitude }}</p> -->
       <br>
       <hr />
       <hr />

@@ -7,10 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@syncfusion/ej2-vue-dropdowns": "^19.2.55",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vue-suggestion": "^2.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
