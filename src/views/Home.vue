@@ -12,13 +12,6 @@
     </div>
     <br>
     <hr />
-    <div v-for="restaurant in restaurantLists">
-      <p>{{ restaurant.restaurant["restaurant_name"] }}</p>
-      <!-- Link to Show Restaurants List -->
-      <!-- <router-link v-bind:to="`/restaurant_lists/${restaurantLists.id}/ShowRestaurantsLists`">See restaurants in collection</router-link> -->
-    </div>
-    <br>
-    <hr />
   </div>
 </template>
 
@@ -32,12 +25,10 @@
         message: "YummyList",
         newListName: {},
         listNames: [],
-        restaurantLists: {},
       }
     },
     created: function () {
       this.indexListNames();
-      this.indexRestaurantLists();
     },
     methods: {
       createListName: function () {
@@ -52,13 +43,6 @@
         axios.get("/list_names").then(response => {
           console.log(response.data);
           this.listNames = response.data
-        });
-      },
-      indexRestaurantLists: function () {
-        console.log("indexing restaurant lists")
-        axios.get("/restaurant_lists").then(response => {
-          console.log(response.data);
-          this.restaurantLists = response.data
         });
       },
       goToShowRestaurantsLists: function () {
