@@ -11,7 +11,9 @@
       <button v-on:click=""> View restaurants</button>
     </div> 
     <br>
-    <hr />     
+    <hr />
+    <div v-for="restaurant in restaurantLists">
+      <p>{{ restaurant.restaurant["restaurant_name"] }}</p>
     </div>    
   </div>
 </template>
@@ -19,17 +21,19 @@
 <style></style>
 
 <script>
-  import axios from 'axios'
+  import axios from "axios"
   export default {
     data: function () {
       return {
         message: "YummyList",
         newListName: {},
-        listNames: [],     
+        listNames: [],
+        restaurantLists: {},
       }
     },
     created: function () {
-      this.indexlistNames();
+      this.indexListNames();
+      this.indexRestaurantLists();
     },
     methods: {
       createListName: function () {
@@ -39,13 +43,20 @@
           this.newListName = {}
         }); 
       },
-      indexlistNames: function() {
-        console.log('indexing user lists')
+      indexListNames: function() {
+        console.log("indexing user lists")
         axios.get("/list_names").then(response => {
           console.log(response.data);
           this.listNames = response.data
         });
-      },                
+      },
+      indexRestaurantLists: function () {
+        console.log("indexing restaurant lists")
+        axios.get("/restaurant_lists").then(response => {
+          console.log(response.data);
+          this.restaurantLists = response.data
+        });
+      }         
     }
   };
 </script>

@@ -54,8 +54,6 @@
         }
         axios.post("/restaurant_lists", params).then(response => {
           console.log(response.data);
-
-
         })
         console.log("adding to list")
       }
