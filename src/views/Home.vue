@@ -19,13 +19,6 @@
     </div>
     <br>
     <hr />
-    <div>
-      <p> List ID: {{ listNameId }}</p>
-      <select v-model="listNameId">
-        <option v-for="list in listNames" v-bind:value="listNames.id">{{ list.list_name }}</option>
-      </select>
-      <br>
-    </div>
   </div>
 </template>
 
@@ -40,16 +33,11 @@
         newListName: {},
         listNames: [],
         restaurantLists: {},
-        listNameId: 0,
       }
     },
     created: function () {
       this.indexListNames();
       this.indexRestaurantLists();
-      axios.get("/list_names").then((response) => {
-        console.log(response.data);
-        this.listNames = response.data;
-      });
     },
     methods: {
       createListName: function () {

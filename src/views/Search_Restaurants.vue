@@ -1,6 +1,14 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <div>
+      <p> List ID: {{ listNameId }}</p>
+      <select v-model="listNameId">
+        <option v-for="list in listNames" v-bind:value="listNames.id">{{ list.list_name }}</option>
+      </select>
+    </div>
+    <br>
+    <br>
     <input type="text" v-model="filterValue">
     <button v-on:click="filter()"> Search restaurant</button>
     <div v-for ="restaurant in filterRestaurants">
@@ -24,10 +32,17 @@
         restaurants: {},
         filterRestaurants: {},
         filterValue: "",
+        listNameId: 0,
+        listNames: [],
       };
     },
     created: function () {
       this.indexRestaurants();
+      this.indexListNames();
+      axios.get("/list_names").then((response) => {
+        console.log(response.data);
+        this.listNames = response.data;
+      });
     },
     methods: {
       indexRestaurants: function() {
@@ -56,7 +71,14 @@
           console.log(response.data);
         })
         console.log("adding to list")
+      },
+      indexListNames: function() {
+        console.log("indexing user lists")
+        axios.get("/list_names").then(response => {
+          console.log(response.data);
+          this.listNames = response.data
+        });
       }
-    },
+    }
   };
 </script>
