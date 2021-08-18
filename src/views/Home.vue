@@ -8,12 +8,14 @@
     <hr />     
     <div v-for="list in listNames">
       <p>{{ list.list_name }}</p>
-      <button v-on:click=""> View restaurants</button>
+      <button v-on:click="goToShowRestaurantsLists()"> See restaurants in collection</button>
     </div>
     <br>
     <hr />
     <div v-for="restaurant in restaurantLists">
       <p>{{ restaurant.restaurant["restaurant_name"] }}</p>
+      <!-- Link to Show Restaurants List -->
+      <!-- <router-link v-bind:to="`/restaurant_lists/${restaurantLists.id}/ShowRestaurantsLists`">See restaurants in collection</router-link> -->
     </div>
     <br>
     <hr />
@@ -70,7 +72,10 @@
           console.log(response.data);
           this.restaurantLists = response.data
         });
-      }         
+      },
+      goToShowRestaurantsLists: function () {
+        this.$router.push("/ShowRestaurantsLists");
+      }      
     }
   };
 </script>

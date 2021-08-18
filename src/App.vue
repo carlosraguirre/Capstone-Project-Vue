@@ -7,7 +7,7 @@
       <router-link to="/logout">Logout</router-link> |
       <router-link to="/search">Search</router-link> |
       <router-link to="/restaurants">Restaurants</router-link> |
-      <router-link to="/show">Show Restaurant</router-link>
+      <router-link to="/ShowRestaurantsLists">Show Restaurants</router-link>
 
     </div>
     <router-view/>
