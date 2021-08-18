@@ -8,7 +8,7 @@
     <hr />     
     <div v-for="list in listNames">
       <p>{{ list.list_name }}</p>
-      <button v-on:click="goToShowRestaurantsLists()"> See restaurants in collection</button>
+      <button v-on:click="goToShowRestaurantsList()"> See restaurants in collection</button>
     </div>
     <br>
     <hr />
@@ -45,8 +45,8 @@
           this.listNames = response.data
         });
       },
-      goToShowRestaurantsLists: function () {
-        this.$router.push("/ShowRestaurantsLists");
+      goToShowRestaurantsList: function () {
+        this.$router.push("/ShowRestaurantsList");
       }      
     }
   };

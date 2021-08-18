@@ -14,9 +14,7 @@
   export default {
     data: function () {
       return {
-        message: "Restaurants in your [blank] list",
-        indexRestaurantLists: {}
-
+        restaurantLists: {}
       };
     },
     created: function () {

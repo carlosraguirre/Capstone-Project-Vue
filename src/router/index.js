@@ -5,7 +5,7 @@ import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Restaurants from '../views/Search_Restaurants.vue'
-import Show from '../views/ShowRestaurantsLists.vue'
+import Show from '../views/ShowRestaurantsList.vue'
 
 Vue.use(VueRouter)
 
@@ -36,8 +36,8 @@ const routes = [
     component: Restaurants
   },
   {
-    path: '/ShowRestaurantsLists',
-    name: 'Show Restaurants Lists',
+    path: '/ShowRestaurantsList',
+    name: 'Show Restaurants List',
     component: Show
   }
 ]
