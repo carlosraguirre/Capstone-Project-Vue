@@ -8,6 +8,7 @@
     <hr />     
     <div v-for="list in listNames">
       <p>{{ list.list_name }}</p>
+      <button v-on:click=""> View restaurants</button>
     </div> 
     <br>
     <hr />     
