@@ -2,7 +2,7 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <div>
-      <p> List ID: {{ listNameId }}</p>
+      <!-- <p> List ID: {{ listNameId }}</p> -->
       <select v-model="listNameId">
         <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
       </select>
@@ -28,7 +28,7 @@
   export default {
     data: function () {
       return {
-        message: "Restaurants",
+        message: "Search for a restaurant",
         restaurants: {},
         filterRestaurants: {},
         filterValue: "",
