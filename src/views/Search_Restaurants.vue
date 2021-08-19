@@ -4,7 +4,7 @@
     <div>
       <p> List ID: {{ listNameId }}</p>
       <select v-model="listNameId">
-        <option v-for="list in listNames" v-bind:value="listNames.id">{{ list.list_name }}</option>
+        <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
       </select>
     </div>
     <br>
@@ -65,7 +65,7 @@
       addToList: function (restaurant) {
         var params = {
           restaurant_id: restaurant.id,
-          list_name_id: 88
+          list_name_id: this.listNameId
         }
         axios.post("/restaurant_lists", params).then(response => {
           console.log(response.data);

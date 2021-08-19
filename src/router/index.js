@@ -36,7 +36,7 @@ const routes = [
     component: Restaurants
   },
   {
-    path: '/ShowRestaurantsList',
+    path: '/list_names/:id',
     name: 'Show Restaurants List',
     component: Show
   }

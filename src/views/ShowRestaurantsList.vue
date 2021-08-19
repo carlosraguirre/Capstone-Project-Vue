@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <h1>{{ message }}</h1>
+    <!-- <h1>{{ message }}</h1> -->
     <div v-for="restaurant in restaurantLists">
-      <p>{{ restaurant.restaurant["restaurant_name"] }}</p>
+      <p>{{ restaurant["restaurant_name"] }}</p>
     </div>   
   </div>
 </template>
@@ -23,9 +23,9 @@
     methods: {
       indexRestaurantLists: function () {
         console.log("indexing restaurant lists")
-        axios.get("/restaurant_lists").then(response => {
+        axios.get("/list_names/" + this.$route.params.id).then(response => {
           console.log(response.data);
-          this.restaurantLists = response.data
+          this.restaurantLists = response.data.restaurants
         });
       },
     },
