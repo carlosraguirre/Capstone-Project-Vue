@@ -59,6 +59,32 @@
             </div>
         </div>
     </div>
+  <!-- Contact Section-->
+  <section class="page-section" id="contact">
+      <div class="container">
+          <!-- Contact Section Heading-->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Restaurants</h2>
+          <!-- Icon Divider-->
+          <div class="divider-custom">
+              <div class="divider-custom-line"></div>
+              <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+              <div class="divider-custom-line"></div>
+          </div>
+          <!-- List Dropdown-->
+          <select v-model="listNameId">
+            <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
+          </select>
+          <!-- Searh Restaurants -->
+          <div>
+             <input type="text" v-model="filterValue">
+             <button v-on:click="filter()"> Search restaurant</button>
+             <div v-for ="restaurant in filterRestaurants">
+               <p>{{ restaurant.restaurant_name }}</p>
+               <button v-on:click="addToList(restaurant)"> Add to list</button>   
+             </div>
+          </div>
+      </div>
+  </section>    
  </div>   
 </template>
 
@@ -72,12 +98,22 @@
         message: "YummyList",
         newListName: {},
         listNames: [],
-        restaurantLists: {},        
+        restaurantLists: {},
+        filterRestaurants: {},
+        filterValue: "",
+        listNameId: 0,
+        listNames: [],
+        restaurants: {},        
       }
     },
     created: function () {
       this.indexListNames();
-      this.indexRestaurantLists();      
+      this.indexRestaurantLists();
+      this.indexRestaurants();
+      axios.get("/list_names").then((response) => {
+        console.log(response.data);
+        this.listNames = response.data;
+      });      
     },
     methods: {
       createListName: function () {
@@ -103,7 +139,34 @@
           console.log(response.data);
           this.restaurantLists = response.data.restaurants
         });
-      },           
+      },
+      indexRestaurants: function() {
+        console.log("indexing restaurants")
+        axios.get("/restaurants").then(response => {
+          console.log(response.data);
+          this.restaurants = response.data
+          // this.filterRestaurants = this.restaurants
+        });
+      },   
+      filter: function () {
+        console.log(this.filterValue)
+        this.filterRestaurants = []
+        this.restaurants.forEach(restaurant => {
+            if (restaurant.restaurant_name.includes(this.filterValue)) {
+              this.filterRestaurants.push(restaurant);
+            }
+        });        
+      },
+      addToList: function (restaurant) {
+        var params = {
+          restaurant_id: restaurant.id,
+          list_name_id: this.listNameId
+        }
+        axios.post("/restaurant_lists", params).then(response => {
+          console.log(response.data);
+        })
+        console.log("adding to list")
+      }            
     }
   };
 </script>
