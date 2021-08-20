@@ -4,7 +4,7 @@
       /* <!-- Navigation--> */
       <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
           <div class="container">
-              <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+              <a class="navbar-brand" href="#page-top">YummyList</a>
               <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                   Menu
                   <i class="fas fa-bars"></i>
@@ -24,7 +24,7 @@
               <!-- Masthead Avatar Image-->
               <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." />
               <!-- Masthead Heading-->
-              <h1 class="masthead-heading text-uppercase mb-0">Start Bootstrap</h1>
+              <h1 class="masthead-heading text-uppercase mb-0">Welcome to YummyList!</h1>
               <!-- Icon Divider-->
               <div class="divider-custom divider-light">
                   <div class="divider-custom-line"></div>
@@ -32,7 +32,7 @@
                   <div class="divider-custom-line"></div>
               </div>
               <!-- Masthead Subheading-->
-              <p class="masthead-subheading font-weight-light mb-0">Graphic Artist - Web Designer - Illustrator</p>
+              <p class="masthead-subheading font-weight-light mb-0">Short & sweet pitch on what app is</p>
           </div>
       </header>
     </div>
