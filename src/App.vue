@@ -25,7 +25,7 @@
       <header class="masthead bg-primary text-white text-center">
           <div class="container d-flex align-items-center flex-column">
               <!-- Masthead Avatar Image-->
-              <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." />
+              <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
               <!-- Masthead Heading-->
               <h1 class="masthead-heading text-uppercase mb-0">Welcome to YummyList!</h1>
               <!-- Icon Divider-->
@@ -35,7 +35,7 @@
                   <div class="divider-custom-line"></div>
               </div>
               <!-- Masthead Subheading-->
-              <p class="masthead-subheading font-weight-light mb-0">Short & sweet pitch on what app is</p>
+              <p class="masthead-subheading font-weight-light mb-0">Short & sweet pitch on what app is when logged out</p>
           </div>
       </header>
     </div>

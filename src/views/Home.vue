@@ -27,7 +27,7 @@
                           <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                               <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                           </div>
-                          <img class="img-fluid" src="assets/img/portfolio/cabin.png" alt="..." />
+                          <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="..." />
                       </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
   <!-- Search Restaurants Section-->
   <section class="page-section" id="contact">
       <div class="container">
-          <!-- Contact Section Heading-->
+          <!-- Search Section Heading-->
           <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Restaurants</h2>
           <!-- Icon Divider-->
           <div class="divider-custom">
@@ -82,6 +82,8 @@
              <select v-model="listNameId">
                <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
              </select>
+             <br>
+             <br>
              <!-- Search Restaurants -->
              <div>
                <input type="text" v-model="filterValue">
