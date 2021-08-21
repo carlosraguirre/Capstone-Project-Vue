@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-  <!-- Contact Section-->
+  <!-- Search Restaurants Section-->
   <section class="page-section" id="contact">
       <div class="container">
           <!-- Contact Section Heading-->
@@ -71,16 +71,18 @@
               <div class="divider-custom-line"></div>
           </div>
           <!-- List Dropdown-->
-          <select v-model="listNameId">
-            <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
-          </select>
-          <!-- Search Restaurants -->
-          <div>
-             <input type="text" v-model="filterValue">
-             <button v-on:click="filter()"> Search restaurant</button>
-             <div v-for ="restaurant in filterRestaurants">
-               <p>{{ restaurant.restaurant_name }}</p>
-               <button v-on:click="addToList(restaurant)"> Add to list</button>   
+          <div id="search">
+             <select v-model="listNameId">
+               <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
+             </select>
+             <!-- Search Restaurants -->
+             <div>
+               <input type="text" v-model="filterValue">
+               <button v-on:click="filter()"> Search restaurant</button>
+               <div v-for ="restaurant in filterRestaurants">
+                 <p>{{ restaurant.restaurant_name }}</p>
+                 <button v-on:click="addToList(restaurant)"> Add to list</button>   
+               </div>
              </div>
           </div>
       </div>
@@ -88,7 +90,12 @@
  </div>   
 </template>
 
-<style></style>
+<style>
+  #search {
+text-align: center;
+padding: 2em
+  }
+</style>
 
 <script>
   import axios from "axios"
