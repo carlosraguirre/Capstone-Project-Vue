@@ -15,8 +15,8 @@
             <div class="row justify-content-center">
                 <!-- Portfolio Item 1-->
                 <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">
-                   <div class ="container">{{ list.list_name  }}</div>
-                      <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                   <div class ="container">{{ list.list_name }}</div>
+                      <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1" v-on:click="showList(list)">
                           <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                               <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                           </div>
@@ -37,17 +37,17 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Log Cabin</h2>
-                                <!-- Icon Divider-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{ currentList.list_name }}</h2>
+                                <!-- Icon Divider -->
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <!-- Portfolio Modal - Image-->
-                                <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." />
+                                <!-- <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." /> -->
                                 <!-- Portfolio Modal - Text-->
-                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <p class="mb-4" v-for="restaurant in currentList.restaurants"> {{ restaurant.restaurant_name }}</p>
                                 <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
                                     <i class="fas fa-times fa-fw"></i>
                                     Close Window
@@ -74,7 +74,7 @@
           <select v-model="listNameId">
             <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
           </select>
-          <!-- Searh Restaurants -->
+          <!-- Search Restaurants -->
           <div>
              <input type="text" v-model="filterValue">
              <button v-on:click="filter()"> Search restaurant</button>
@@ -102,8 +102,8 @@
         filterRestaurants: {},
         filterValue: "",
         listNameId: 0,
-        listNames: [],
-        restaurants: {},        
+        restaurants: {},
+        currentList: {},
       }
     },
     created: function () {
@@ -166,7 +166,11 @@
           console.log(response.data);
         })
         console.log("adding to list")
-      }            
+      },
+      showList: function (list) {
+       console.log("running show list")
+       this.currentList = list;
+      },
     }
   };
 </script>
