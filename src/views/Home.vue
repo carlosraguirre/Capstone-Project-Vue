@@ -11,6 +11,13 @@
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
+            <!-- Create List -->
+            <div id="createList">
+               <p><input type="text" v-model="newListName.list_name" placeholder="List Name"></p>
+               <button v-on:click="createListName()"> Create new list</button>
+            </div>
+            <br>
+            <br>                 
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
                 <!-- Portfolio Item 1-->
@@ -95,6 +102,10 @@
 text-align: center;
 padding: 2em
   }
+  #createList {
+text-align: center;
+padding: 2em
+  }  
 </style>
 
 <script>
