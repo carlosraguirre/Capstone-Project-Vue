@@ -38,7 +38,6 @@
       </section>
     </div>
     <!-- List Modals-->
-    <!-- List Modal 1-->
     <div v-if="isLoggedIn()">
       <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
           <div class="modal-dialog modal-xl">
@@ -59,11 +58,13 @@
                                   <!-- List Modal - Image-->
                                   <!-- <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." /> -->
                                   <!-- List Modal - Text-->
-                                  <p class="mb-4" v-for="restaurant in currentList.restaurants"> {{ restaurant.restaurant_name }}</p>
-                                  <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
-                                      <i class="fas fa-times fa-fw"></i>
-                                      Close Window
-                                  </button>
+                                  <h6>
+                                    <p class="mb-4" v-for="restaurant in currentList.restaurants"> {{ restaurant.restaurant_name }}<button v-on:click="removeRestaurant()">Remove restaurant</button></p>
+                                    <button class="btn btn-primary" v-on:click="deleteList()">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Delete List
+                                    </button>
+                                  </h6>
                               </div>
                           </div>
                       </div>
@@ -269,6 +270,11 @@ padding: 2em
             if (restaurant.restaurant_name.includes(this.filterValue)) {
               this.filterRestaurants.push(restaurant);
             }
+            else {
+              then(response => {{"no matches"}})
+              // console.log("no results alert");
+              // alert("No restaurants found");
+            }
         });        
       },
       addToList: function (restaurant) {
@@ -317,7 +323,21 @@ padding: 2em
         } else {
           return false;
         }      
-      },   
+      },
+      deleteList: function() {
+        console.log("deleting list");
+        axios.delete("/list_names/" + this.$route.params.id). then(response => {
+          console.log(response.data);
+          // window.location.reload();          
+        });
+      },
+      removeRestaurant: function() {
+        console.log("removing restaurant");
+        axios.delete("/restaurant_lists/" + this.$route.params.id). then(response => {
+          console.log(response.data);
+          // window.location.reload();           
+        });
+      }
     }
   };
 </script>
