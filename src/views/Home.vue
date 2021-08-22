@@ -1,163 +1,176 @@
 <template>
   <div>
     <!-- Portfolio Section-->
-    <section class="page-section portfolio" id="your-lists">
+    <div v-if="isLoggedIn()">
+      <section class="page-section portfolio" id="your-lists">
+          <div class="container">
+              <!-- Portfolio Section Heading-->
+              <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Your Lists</h2>
+              <!-- Icon Divider-->
+              <div class="divider-custom">
+                  <div class="divider-custom-line"></div>
+                  <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                  <div class="divider-custom-line"></div>
+              </div>
+              <!-- Create List -->
+              <div id="createList">
+                <p><input type="text" v-model="newListName.list_name" placeholder="List Name"></p>
+                <button v-on:click="createListName()"> Create new list</button>
+              </div>
+              <br>
+              <br>                 
+              <!-- Portfolio Grid Items-->
+              <div class="row justify-content-center">
+                  <!-- Portfolio Item 1-->
+                  <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">
+                    <div class ="container">{{ list.list_name }}</div>
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1" v-on:click="showList(list)">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="..." />
+                        </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+    </div>
+    <!-- Portfolio Modals-->
+    <!-- Portfolio Modal 1-->
+    <div v-if="isLoggedIn()">
+      <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                  <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                  <div class="modal-body text-center pb-5">
+                      <div class="container">
+                          <div class="row justify-content-center">
+                              <div class="col-lg-8">
+                                  <!-- Portfolio Modal - Title-->
+                                  <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{ currentList.list_name }}</h2>
+                                  <!-- Icon Divider -->
+                                  <div class="divider-custom">
+                                      <div class="divider-custom-line"></div>
+                                      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                      <div class="divider-custom-line"></div>
+                                  </div>
+                                  <!-- Portfolio Modal - Image-->
+                                  <!-- <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." /> -->
+                                  <!-- Portfolio Modal - Text-->
+                                  <p class="mb-4" v-for="restaurant in currentList.restaurants"> {{ restaurant.restaurant_name }}</p>
+                                  <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                      <i class="fas fa-times fa-fw"></i>
+                                      Close Window
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  <!-- Search Restaurants Section-->
+  <div v-if="isLoggedIn()">
+    <section class="page-section" id="search">
         <div class="container">
-            <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Your Lists</h2>
+            <!-- Search Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Restaurants</h2>
             <!-- Icon Divider-->
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <!-- Create List -->
-            <div id="createList">
-               <p><input type="text" v-model="newListName.list_name" placeholder="List Name"></p>
-               <button v-on:click="createListName()"> Create new list</button>
-            </div>
-            <br>
-            <br>                 
-            <!-- Portfolio Grid Items-->
-            <div class="row justify-content-center">
-                <!-- Portfolio Item 1-->
-                <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">
-                   <div class ="container">{{ list.list_name }}</div>
-                      <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1" v-on:click="showList(list)">
-                          <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                              <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                          </div>
-                          <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="..." />
-                      </div>
+            <!-- List Dropdown-->
+            <div id="search">
+              <select v-model="listNameId">
+                <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
+              </select>
+              <br>
+              <br>
+              <!-- Search Restaurants -->
+              <div>
+                <input type="text" v-model="filterValue">
+                <button v-on:click="filter()"> Search restaurant</button>
+                <div v-for ="restaurant in filterRestaurants">
+                  <p>{{ restaurant.restaurant_name }}</p>
+                  <button v-on:click="addToList(restaurant)"> Add to list</button>   
                 </div>
+              </div>
             </div>
         </div>
     </section>
-    <!-- Portfolio Modals-->
-    <!-- Portfolio Modal 1-->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                <div class="modal-body text-center pb-5">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{ currentList.list_name }}</h2>
-                                <!-- Icon Divider -->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image-->
-                                <!-- <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." /> -->
-                                <!-- Portfolio Modal - Text-->
-                                <p class="mb-4" v-for="restaurant in currentList.restaurants"> {{ restaurant.restaurant_name }}</p>
-                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
-                                    <i class="fas fa-times fa-fw"></i>
-                                    Close Window
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  <!-- Search Restaurants Section-->
-  <section class="page-section" id="search">
+  </div>
+  <!-- Signup -->
+  <div v-if="!isLoggedIn()">
+    <section class="page-section" id="signup">  
       <div class="container">
-          <!-- Search Section Heading-->
-          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Restaurants</h2>
+          <!-- Contact Section Heading-->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Signup</h2>
           <!-- Icon Divider-->
           <div class="divider-custom">
               <div class="divider-custom-line"></div>
               <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-              <div class="divider-custom-line"></div>
+              <div class="divider-custom-line"></div>     
           </div>
-          <!-- List Dropdown-->
-          <div id="search">
-             <select v-model="listNameId">
-               <option v-for="list in listNames" v-bind:value="list.id">{{ list.list_name }}</option>
-             </select>
-             <br>
-             <br>
-             <!-- Search Restaurants -->
-             <div>
-               <input type="text" v-model="filterValue">
-               <button v-on:click="filter()"> Search restaurant</button>
-               <div v-for ="restaurant in filterRestaurants">
-                 <p>{{ restaurant.restaurant_name }}</p>
-                 <button v-on:click="addToList(restaurant)"> Add to list</button>   
-               </div>
-             </div>
-          </div>
-      </div>
-  </section>
-  <!-- Login -->
-  <section class="page-section" id="login">  
-     <div class="container">
-        <!-- Contact Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Login</h2>
-        <!-- Icon Divider-->
-        <div class="divider-custom">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-            <div class="divider-custom-line"></div>     
-        </div>
-        <div class="login">
-          <div id="login">
+          <br>
+          <div class="signup">
             <form v-on:submit.prevent="submit()">
               <ul>
                 <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
               </ul>
               <div>
-                <input type="email" v-model="newSessionParams.email" placeholder="email"/>
+                <input type="text" v-model="newUserParams.name" placeholder="Name" />
               </div>
               <div>
-                <input type="password" v-model="newSessionParams.password" placeholder="password"/>
+                <input type="email" v-model="newUserParams.email" placeholder="Email"/>
+              </div>
+              <div>
+                <input type="password" v-model="newUserParams.password" placeholder="Password"/>
+              </div>
+              <div>
+                <input type="password" v-model="newUserParams.password_confirmation" placeholder="Password Confirmation"/>
               </div>
               <input type="submit" value="Submit" />
             </form>
           </div>
-        </div>
-     </div>
-  </section>
-  <!-- Signup -->
-  <section class="page-section" id="signup">  
-     <div class="container">
-        <!-- Contact Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Signup</h2>
-        <!-- Icon Divider-->
-        <div class="divider-custom">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-            <div class="divider-custom-line"></div>     
-        </div>
-        <div class="signup">
-           <form v-on:submit.prevent="submit()">
-             <ul>
-               <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-             </ul>
-             <div>
-               <input type="text" v-model="newUserParams.name" placeholder="Name" />
-             </div>
-             <div>
-               <input type="email" v-model="newUserParams.email" placeholder="Email"/>
-             </div>
-             <div>
-               <input type="password" v-model="newUserParams.password" placeholder="Password"/>
-             </div>
-             <div>
-               <input type="password" v-model="newUserParams.password_confirmation" placeholder="Password Confirmation"/>
-             </div>
-             <input type="submit" value="Submit" />
-           </form>
-        </div>
-     </div>
-  </section>  
+      </div>
+    </section>
+  </div>
+  <!-- Login -->
+  <div v-if="!isLoggedIn()">
+    <section class="page-section" id="login">  
+      <div class="container">
+          <!-- Contact Section Heading-->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Login</h2>
+          <!-- Icon Divider-->
+          <div class="divider-custom">
+              <div class="divider-custom-line"></div>
+              <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+              <div class="divider-custom-line"></div>     
+          </div>
+          <div class="login">
+            <div id="login">
+              <form v-on:submit.prevent="submit()">
+                <ul>
+                  <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                </ul>
+                <div>
+                  <input type="email" v-model="newSessionParams.email" placeholder="email"/>
+                </div>
+                <div>
+                  <input type="password" v-model="newSessionParams.password" placeholder="password"/>
+                </div>
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>
+  <!-- Logout -->
+  <div class="logout"></div>
  </div>   
 </template>
 
@@ -206,7 +219,10 @@ padding: 2em
       axios.get("/list_names").then((response) => {
         console.log(response.data);
         this.listNames = response.data;
-      });      
+      });
+      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem("jwt");
+      this.$router.push("/");      
     },
     methods: {
       createListName: function () {
@@ -289,7 +305,14 @@ padding: 2em
           .catch((error) => {
             this.errors = error.response.data.errors;
           });
-      },      
+      },
+      isLoggedIn: function() {
+        if (localStorage.getItem("jwt")) {
+          return true;
+        } else {
+          return false;
+        }      
+      }        
     }
   };
 </script>

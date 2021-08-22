@@ -11,12 +11,12 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarResponsive">
                   <ul class="navbar-nav ms-auto">
-                      <li class="nav-item mx-0 mx-lg-1">
+                      <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#your-lists">Your Lists</a></li>
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#search">Search Restaurants</a></li>
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#signup">Signup</a></li>
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#logout">Logout</a></li>
+                      <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#search">Search Restaurants</a></li>
+                      <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
+                      <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#signup">Signup</a></li>
+                      <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#logout">Logout</a></li>
                   </ul>
               </div>
           </div>
@@ -35,7 +35,9 @@
                   <div class="divider-custom-line"></div>
               </div>
               <!-- Masthead Subheading-->
-              <p class="masthead-subheading font-weight-light mb-0">Short & sweet pitch on what app is when logged out</p>
+              <div v-if="!isLoggedIn()">              
+                <p class="masthead-subheading font-weight-light mb-0">Search restaurants and save them to your custom lists</p>
+              </div>
           </div>
       </header>
     </div>
@@ -45,40 +47,47 @@
         <div class="container">
             <div class="row">
                 <!-- Footer Location-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
+                <!-- <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">Location</h4>
                     <p class="lead mb-0">
                         2215 John Daniel Drive
                         <br />
                         Clark, MO 65243
                     </p>
-                </div>
+                </div> -->
                 <!-- Footer Social Icons-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
+                <!-- <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">Around the Web</h4>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
-                </div>
+                </div> -->
                 <!-- Footer About Text-->
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                     <h4 class="text-uppercase mb-4">About Freelancer</h4>
                     <p class="lead mb-0">
                         Freelance is a free to use, MIT licensed Bootstrap theme created by
                         <a href="http://startbootstrap.com">Start Bootstrap</a>
                         .
                     </p>
-                </div>
+                </div> -->
             </div>
         </div>
     </footer>    
   </div>
 </template>
 
-
-
-<style>
-
-
-</style>
+<script>
+export default {
+  methods: {
+    isLoggedIn: function() {
+      if (localStorage.getItem("jwt")) {
+        return true;
+      } else {
+        return false;
+      }      
+    }
+  }
+}
+</script>
