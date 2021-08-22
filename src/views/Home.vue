@@ -103,6 +103,7 @@
     </section>
   </div>
   <!-- Signup -->
+  <br>
   <div v-if="!isLoggedIn()">
     <section class="page-section" id="signup">  
       <div class="container">
@@ -117,6 +118,7 @@
           <br>
           <div class="signup">
             <form v-on:submit.prevent="submit()">
+              <h5>Please signup if you don't have an account</h5>                        
               <ul>
                 <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
               </ul>
@@ -138,6 +140,7 @@
       </div>
     </section>
   </div>
+  <br>
   <!-- Login -->
   <div v-if="!isLoggedIn()">
     <section class="page-section" id="login">  
@@ -153,6 +156,7 @@
           <div class="login">
             <div id="login">
               <form v-on:submit.prevent="submit()">
+                <h5>Welcome back! Please login</h5>
                 <ul>
                   <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
                 </ul>
