@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Portfolio Section-->
-    <section class="page-section portfolio" id="portfolio">
+    <section class="page-section portfolio" id="your-lists">
         <div class="container">
             <!-- Portfolio Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Your Lists</h2>
@@ -67,7 +67,7 @@
         </div>
     </div>
   <!-- Search Restaurants Section-->
-  <section class="page-section" id="contact">
+  <section class="page-section" id="search">
       <div class="container">
           <!-- Search Section Heading-->
           <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search Restaurants</h2>
@@ -95,7 +95,69 @@
              </div>
           </div>
       </div>
-  </section>    
+  </section>
+  <!-- Login -->
+  <section class="page-section" id="login">  
+     <div class="container">
+        <!-- Contact Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Login</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>     
+        </div>
+        <div class="login">
+          <div id="login">
+            <form v-on:submit.prevent="submit()">
+              <ul>
+                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+              </ul>
+              <div>
+                <input type="email" v-model="newSessionParams.email" placeholder="email"/>
+              </div>
+              <div>
+                <input type="password" v-model="newSessionParams.password" placeholder="password"/>
+              </div>
+              <input type="submit" value="Submit" />
+            </form>
+          </div>
+        </div>
+     </div>
+  </section>
+  <!-- Signup -->
+  <section class="page-section" id="signup">  
+     <div class="container">
+        <!-- Contact Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Signup</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>     
+        </div>
+        <div class="signup">
+           <form v-on:submit.prevent="submit()">
+             <ul>
+               <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+             </ul>
+             <div>
+               <input type="text" v-model="newUserParams.name" placeholder="Name" />
+             </div>
+             <div>
+               <input type="email" v-model="newUserParams.email" placeholder="Email"/>
+             </div>
+             <div>
+               <input type="password" v-model="newUserParams.password" placeholder="Password"/>
+             </div>
+             <div>
+               <input type="password" v-model="newUserParams.password_confirmation" placeholder="Password Confirmation"/>
+             </div>
+             <input type="submit" value="Submit" />
+           </form>
+        </div>
+     </div>
+  </section>  
  </div>   
 </template>
 
@@ -107,7 +169,15 @@ padding: 2em
   #createList {
 text-align: center;
 padding: 2em
-  }  
+  }
+#login {
+text-align: center;
+padding: 2em
+}
+#signup {
+text-align: center;
+padding: 2em
+}
 </style>
 
 <script>
@@ -124,6 +194,9 @@ padding: 2em
         listNameId: 0,
         restaurants: {},
         currentList: {},
+        newSessionParams: {},
+        errors: [],
+        newUserParams: {},
       }
     },
     created: function () {
@@ -191,6 +264,32 @@ padding: 2em
        console.log("running show list")
        this.currentList = list;
       },
+      submit: function () {
+        axios
+          .post("/sessions", this.newSessionParams)
+          .then((response) => {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
+            localStorage.setItem("jwt", response.data.jwt);
+            this.$router.push("#page-top");
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.errors = ["Invalid email or password."];
+            this.email = "";
+            this.password = "";
+          });
+      },
+      submit: function () {
+        axios
+          .post("/users", this.newUserParams)
+          .then((response) => {
+            console.log(response.data);
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+          });
+      },      
     }
   };
 </script>
