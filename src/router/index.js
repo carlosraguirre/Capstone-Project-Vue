@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Signup from '../views/Signup.vue'
-import Login from '../views/Login.vue'
-import Logout from '../views/Logout.vue'
-import Restaurants from '../views/Search_Restaurants.vue'
-import Show from '../views/ShowRestaurantsList.vue'
+// import Signup from '../views/Signup.vue'
+// import Login from '../views/Login.vue'
+// import Logout from '../views/Logout.vue'
+// import Restaurants from '../views/Search_Restaurants.vue'
+// import Show from '../views/ShowRestaurantsList.vue'
 
 Vue.use(VueRouter)
 
@@ -15,31 +15,31 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {
-   path: '/signup',
-   name: 'Signup',
-   component: Signup
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/logout',
-    name: 'Logout',
-    component: Logout
-  },
-  {
-    path: '/search_restaurants',
-    name: 'Search Restaurants',
-    component: Restaurants
-  },
-  {
-    path: '/list_names/:id',
-    name: 'Show Restaurants List',
-    component: Show
-  }
+  // {
+  //  path: '/signup',
+  //  name: 'Signup',
+  //  component: Signup
+  // },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: Login
+  // },
+  // {
+  //   path: '/logout',
+  //   name: 'Logout',
+  //   component: Logout
+  // },
+  // {
+  //   path: '/search_restaurants',
+  //   name: 'Search Restaurants',
+  //   component: Restaurants
+  // },
+  // {
+  //   path: '/list_names/:id',
+  //   name: 'Show Restaurants List',
+  //   component: Show
+  // }
 ]
 
 const router = new VueRouter({

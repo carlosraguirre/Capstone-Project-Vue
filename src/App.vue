@@ -12,11 +12,11 @@
               <div class="collapse navbar-collapse" id="navbarResponsive">
                   <ul class="navbar-nav ms-auto">
                       <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#your-lists">Your Lists</a></li>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#search">Your Lists</a></li>
                       <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#search">Search Restaurants</a></li>
                       <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
                       <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#signup">Signup</a></li>
-                      <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#logout">Logout</a></li>
+                      <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()" v-on:click="logout()" ><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#page-top">Logout</a></li>
                   </ul>
               </div>
           </div>
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   methods: {
     isLoggedIn: function() {
@@ -87,6 +88,13 @@ export default {
       } else {
         return false;
       }      
+    },
+    logout: function() {
+    console.log("logging out")
+    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user_id");    
+    window.location.reload();    
     }
   }
 }

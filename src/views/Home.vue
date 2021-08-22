@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- Portfolio Section-->
+    <!-- List Section-->
     <div v-if="isLoggedIn()">
       <section class="page-section portfolio" id="your-lists">
           <div class="container">
-              <!-- Portfolio Section Heading-->
+              <!-- List Section Heading-->
               <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Your Lists</h2>
               <!-- Icon Divider-->
               <div class="divider-custom">
@@ -18,10 +18,10 @@
                 <button v-on:click="createListName()"> Create new list</button>
               </div>
               <br>
-              <br>                 
-              <!-- Portfolio Grid Items-->
+              <br>             
+              <!-- List Grid Items-->
               <div class="row justify-content-center">
-                  <!-- Portfolio Item 1-->
+                  <!-- List Item 1-->
                   <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">
                     <div class ="container">{{ list.list_name }}</div>
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1" v-on:click="showList(list)">
@@ -35,8 +35,8 @@
           </div>
       </section>
     </div>
-    <!-- Portfolio Modals-->
-    <!-- Portfolio Modal 1-->
+    <!-- List Modals-->
+    <!-- List Modal 1-->
     <div v-if="isLoggedIn()">
       <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
           <div class="modal-dialog modal-xl">
@@ -117,7 +117,7 @@
           </div>
           <br>
           <div class="signup">
-            <form v-on:submit.prevent="submit()">
+            <form v-on:submit.prevent="submitSignup()">
               <h5>Please signup if you don't have an account</h5>                        
               <ul>
                 <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
@@ -155,7 +155,7 @@
           </div>
           <div class="login">
             <div id="login">
-              <form v-on:submit.prevent="submit()">
+              <form v-on:submit.prevent="submitLogin()">
                 <h5>Welcome back! Please login</h5>
                 <ul>
                   <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
@@ -173,8 +173,7 @@
       </div>
     </section>
   </div>
-  <!-- Logout -->
-  <div class="logout"></div>
+
  </div>   
 </template>
 
@@ -223,10 +222,7 @@ padding: 2em
       axios.get("/list_names").then((response) => {
         console.log(response.data);
         this.listNames = response.data;
-      });
-      delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("jwt");
-      this.$router.push("/");      
+      });      
     },
     methods: {
       createListName: function () {
@@ -284,13 +280,13 @@ padding: 2em
        console.log("running show list")
        this.currentList = list;
       },
-      submit: function () {
+      submitLogin: function () {
         axios
           .post("/sessions", this.newSessionParams)
           .then((response) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
             localStorage.setItem("jwt", response.data.jwt);
-            this.$router.push("#page-top");
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error.response);
@@ -299,12 +295,12 @@ padding: 2em
             this.password = "";
           });
       },
-      submit: function () {
+      submitSignup: function () {
         axios
           .post("/users", this.newUserParams)
           .then((response) => {
             console.log(response.data);
-            this.$router.push("/login");
+            window.location.reload();
           })
           .catch((error) => {
             this.errors = error.response.data.errors;
@@ -316,7 +312,7 @@ padding: 2em
         } else {
           return false;
         }      
-      }        
+      },   
     }
   };
 </script>
