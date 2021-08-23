@@ -132,27 +132,36 @@
               <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
               <div class="divider-custom-line"></div>     
           </div>
+          <h5>Welcome! Please sign up for an account</h5>
           <br>
           <div class="signup">
-            <form v-on:submit.prevent="submitSignup()">
-              <h5>Please signup if you don't have an account</h5>                        
-              <ul>
-                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-              </ul>
-              <div>
-                <input type="text" v-model="newUserParams.name" placeholder="Name" />
+            <form v-on:submit.prevent="submitSignup()">            
+              <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                  <!-- Name Input -->
+                  <div class="form-floating mb-3">
+                      <input class="form-control" id="name" type="text" placeholder="Name" v-model="newUserParams.name" />
+                      <label for="name">Name</label>
+                  </div>
+                  <!-- Email Input -->
+                  <div class="form-floating mb-3">
+                      <input class="form-control" id="email" type="email" placeholder="Email" v-model="newUserParams.email" />
+                      <label for="email">Email</label>
+                  </div>
+                  <!-- Password Input -->
+                  <div class="form-floating mb-3">
+                      <input class="form-control" id="password" type="password" placeholder="Password" v-model="newUserParams.password" />
+                      <label for="password">Password</label>
+                  </div>
+                  <!-- Password Confirm Input -->
+                  <div class="form-floating mb-3">
+                      <input class="form-control" id="password confirmation" type="password" placeholder="Password confirmation" v-model="newUserParams.password_confirmation" />
+                      <label for="password confirmation">Password confirmation</label>
+                  </div>
+                  <button class="btn btn-primary btn-xl" type="submit" value="Submit">Submit</button>                                                  
+                </div>
               </div>
-              <div>
-                <input type="email" v-model="newUserParams.email" placeholder="Email"/>
-              </div>
-              <div>
-                <input type="password" v-model="newUserParams.password" placeholder="Password"/>
-              </div>
-              <div>
-                <input type="password" v-model="newUserParams.password_confirmation" placeholder="Password Confirmation"/>
-              </div>
-              <input type="submit" value="Submit" />
-            </form>
+            </form>            
           </div>
       </div>
     </section>
@@ -170,24 +179,32 @@
               <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
               <div class="divider-custom-line"></div>     
           </div>
+          <h5>Welcome back! Please login</h5>          
           <div class="login">
             <div id="login">
               <form v-on:submit.prevent="submitLogin()">
-                <h5>Welcome back! Please login</h5>
-                <ul>
-                  <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                </ul>
-                <div>
-                  <input type="email" v-model="newSessionParams.email" placeholder="email"/>
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 col-xl-7">                
+                    <ul>
+                      <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                    </ul>
+                    <!-- Email Input -->
+                    <div class="form-floating mb-3">
+                      <input class="form-control" type="email" v-model="newSessionParams.email" placeholder="email"/>
+                      <label for="email">Email</label>                      
+                    </div>
+                    <!-- Password Input  -->
+                    <div class="form-floating mb-3">
+                      <input class="form-control" type="password" v-model="newSessionParams.password" placeholder="password"/>
+                      <label for="password">Password</label>                      
+                    </div>
+                    <button class="btn btn-primary btn-xl" type="submit" value="Submit">Submit</button> 
+                  </div>
                 </div>
-                <div>
-                  <input type="password" v-model="newSessionParams.password" placeholder="password"/>
-                </div>
-                <input type="submit" value="Submit" />
               </form>
             </div>
           </div>
-      </div>
+        </div>
     </section>
   </div>
 
