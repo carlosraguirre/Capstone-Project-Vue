@@ -13,12 +13,20 @@
                   <div class="divider-custom-line"></div>
               </div>
               <!-- Create List -->
-              <div id="createList">
-                <p><input type="text" v-model="newListName.list_name" placeholder="List Name"></p>
-                <button v-on:click="createListName()"> Create new list</button>
+              <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <div class="form-floating mb-3" id="createList">
+                      <input class="form-control" type="text" v-model="newListName.list_name" placeholder="List name">
+                      <label for="name">List name</label>
+                      <br>
+                      <button class="btn btn-primary btn-xl" id="submitButton" v-on:click="createListName()"> Create new list</button>
+                    </div>
+                </div>
               </div>
               <br>
-              <br>             
+              <br>
+              <br>
+              <br>                 
               <!-- List Grid Items-->
               <div class="row justify-content-center">
                   <!-- List Item 1-->
@@ -186,8 +194,7 @@ text-align: center;
 padding: 2em
   }
   #createList {
-text-align: center;
-padding: 2em
+text-align: center
   }
 #login {
 text-align: center;
