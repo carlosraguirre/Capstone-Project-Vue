@@ -29,7 +29,7 @@
               <br>                 
               <!-- List Grid Items-->
               <div class="row justify-content-center">
-                  <!-- List Item 1-->
+                  <!-- List Item -->
                   <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">
                     <div class ="container" id="tile_name">
                       <h6>{{ list.list_name }}</h6>
@@ -101,14 +101,20 @@
               <br>
               <br>
               <!-- Search Restaurants -->
-              <div>
-                <input type="text" v-model="filterValue">
-                <button v-on:click="filter()"> Search restaurant</button>
-                <div v-for ="restaurant in filterRestaurants">
-                  <p>{{ restaurant.restaurant_name }}</p>
-                  <button v-on:click="addToList(restaurant)"> Add to list</button>   
+              <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <div class="form-floating mb-3" id="searchRestaurant">
+                      <input class="form-control" type="text" v-model="filterValue" placeholder="Search restaurant">
+                      <label for="name">Search restaurant</label>
+                      <br>
+                      <button class="btn btn-primary btn-xl" id="submitButton" v-on:click="filter()"> Search restaurant</button>
+                      <div v-for ="restaurant in filterRestaurants">
+                        <p>{{ restaurant.restaurant_name }}</p>
+                        <button v-on:click="addToList(restaurant)"> Add to list</button>   
+                      </div>                      
+                    </div>
                 </div>
-              </div>
+              </div>             
             </div>
         </div>
     </section>
@@ -190,8 +196,7 @@
 
 <style>
   #search {
-text-align: center;
-padding: 2em
+text-align: center
   }
   #createList {
 text-align: center
@@ -207,6 +212,9 @@ padding: 2em
 #tile_name {
   text-align: center
 }
+  #searchRestaurant {
+text-align: center
+  }
 </style>
 
 <script>
