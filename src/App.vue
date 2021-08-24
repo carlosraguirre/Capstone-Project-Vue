@@ -41,7 +41,7 @@
               </div>
               <!-- Masthead Subheading-->
               <div v-if="!isLoggedIn()">              
-                <p class="masthead-subheading font-weight-light mb-0">Search restaurants and save them to your custom lists</p>
+                <p class="masthead-subheading font-weight-light mb-0">Search restaurants and save them to custom lists</p>
               </div>
           </div>
       </header>
