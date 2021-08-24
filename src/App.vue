@@ -31,7 +31,7 @@
                 <h1 class="masthead-heading text-uppercase mb-0">Welcome to YummyList!</h1>
               </div>
               <div v-if="isLoggedIn()">              
-                <h1 class="masthead-heading text-uppercase mb-0">Welcome back to YummyList!</h1>
+                <h1 class="masthead-heading text-uppercase mb-0">Welcome back to YummyList {{ user.name}}!</h1>
               </div>              
               <!-- Icon Divider-->
               <div class="divider-custom divider-light">
@@ -60,6 +60,14 @@
 <script>
 import axios from "axios"
 export default {
+  data: function() {
+    return {
+      user: ""
+    };
+  },
+  created: function() {
+    this.userShow()
+  },
   methods: {
     isLoggedIn: function() {
       if (localStorage.getItem("jwt")) {
@@ -74,7 +82,12 @@ export default {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user_id");    
     window.location.reload();    
-    }
+    },
+    userShow: function() {
+      axios.get(`/users/${localStorage.user_id}`).then((response) => {console.log(response)
+      this.user = response.data;
+      });
+    } 
   }
 }
 </script>
