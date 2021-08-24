@@ -63,12 +63,12 @@
                                       <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                       <div class="divider-custom-line"></div>
                                   </div>
-                                  <!-- List Modal - Image-->
-                                  <!-- <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." /> -->
                                   <!-- List Modal - Text-->
                                   <h6>
-                                    <p class="mb-4" v-for="restaurant in currentList.restaurants"> {{ restaurant.restaurant_name }}<button v-on:click="removeRestaurant()">Remove restaurant</button></p>
-                                    <button class="btn btn-primary" v-on:click="deleteList()">
+                                    <p class="mb-4" v-for="restaurant in currentList.restaurants">{{ restaurant.restaurant_name }}
+                                    <br>
+                                    </p>
+                                    <button class="btn btn-primary" v-on:click="deleteList(currentList)">
                                         <i class="fas fa-times fa-fw"></i>
                                         Delete List
                                     </button>
@@ -109,9 +109,11 @@
                       <br>
                       <button class="btn btn-primary btn-xl" id="submitButton" v-on:click="filter()"> Search restaurant</button>
                       <div v-for ="restaurant in filterRestaurants">
-                        <p>{{ restaurant.restaurant_name }}</p>
-                        <button v-on:click="addToList(restaurant)"> Add to list</button>   
-                      </div>                      
+                        <br>
+                        <h6>{{ restaurant.restaurant_name }}</h6>
+                        <button v-on:click="addToList(restaurant)"> Add to list</button>
+                        <h4 {{ noRestaurantMessage }}></h4>                 
+                      </div>
                     </div>
                 </div>
               </div>             
@@ -207,7 +209,6 @@
         </div>
     </section>
   </div>
-
  </div>   
 </template>
 
@@ -251,6 +252,7 @@ text-align: center
         newSessionParams: {},
         errors: [],
         newUserParams: {},
+        noRestaurantMessage: ""
       }
     },
     created: function () {
@@ -271,7 +273,6 @@ text-align: center
         }); 
       },
       indexListNames: function() {
-        console.log("indexing user lists")
         axios.get("/list_names").then(response => {
           console.log(response.data);
           this.listNames = response.data
@@ -281,14 +282,12 @@ text-align: center
         this.$router.push("/list_names/" + list.id);
       } ,
       indexRestaurantLists: function () {
-        console.log("indexing restaurant lists")
         axios.get("/list_names/" + this.$route.params.id).then(response => {
           console.log(response.data);
           this.restaurantLists = response.data.restaurants
         });
       },
       indexRestaurants: function() {
-        console.log("indexing restaurants")
         axios.get("/restaurants").then(response => {
           console.log(response.data);
           this.restaurants = response.data
@@ -300,13 +299,12 @@ text-align: center
         this.filterRestaurants = []
         this.restaurants.forEach(restaurant => {
             if (restaurant.restaurant_name.includes(this.filterValue)) {
-              this.filterRestaurants.push(restaurant);
-            }
-            else {
-              then(response => {{"no matches"}})
-              // console.log("no results alert");
-              // alert("No restaurants found");
-            }
+              this.filterRestaurants.push(restaurant)
+              return true
+            } else {
+              this.noRestaurantMessage = "No restaurants found"
+              return false
+            }         
         });        
       },
       addToList: function (restaurant) {
@@ -317,10 +315,8 @@ text-align: center
         axios.post("/restaurant_lists", params).then(response => {
           console.log(response.data);
         })
-        console.log("adding to list")
       },
       showList: function (list) {
-       console.log("running show list")
        this.currentList = list;
       },
       submitLogin: function () {
@@ -356,18 +352,16 @@ text-align: center
           return false;
         }      
       },
-      deleteList: function() {
-        console.log("deleting list");
-        axios.delete("/list_names/" + this.$route.params.id). then(response => {
+      deleteList: function(listName) {
+        console.log(listName);
+        axios.delete(`/list_names/${listName.id}`, listName). then(response => {
           console.log(response.data);
-          // window.location.reload();          
+          window.location.reload();                
         });
       },
-      removeRestaurant: function() {
-        console.log("removing restaurant");
-        axios.delete("/restaurant_lists/" + this.$route.params.id). then(response => {
-          console.log(response.data);
-          // window.location.reload();           
+      removeRestaurant: function(restaurant_id, currentList) {
+        axios.delete("/restaurant_lists/" + restaurant_id.id, {list:currentList.id}).then(response => {
+          console.log(response.data);       
         });
       }
     }

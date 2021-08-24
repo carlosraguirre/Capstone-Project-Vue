@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@smartweb/vue-flash-message": "^0.6.10",
     "@syncfusion/ej2-vue-dropdowns": "^19.2.55",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
