@@ -14,8 +14,8 @@
                       <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#your-lists">Your Lists</a></li>
                       <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#search">Search Restaurants</a></li>
+                      <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#signup">Signup</a></li>                      
                       <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
-                      <li class="nav-item mx-0 mx-lg-1" v-if="!isLoggedIn()"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#signup">Signup</a></li>
                       <li class="nav-item mx-0 mx-lg-1" v-if="isLoggedIn()" v-on:click="logout()" ><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Logout</a></li>
                   </ul>
               </div>
@@ -24,14 +24,11 @@
         /* <!-- Masthead--> */
       <header class="masthead bg-primary text-white text-center">
           <div class="container d-flex align-items-center flex-column">
-              <!-- Masthead Avatar Image-->
-              <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
-              <!-- Masthead Heading-->
               <div v-if="!isLoggedIn()">              
                 <h1 class="masthead-heading text-uppercase mb-0">Welcome to YummyList!</h1>
               </div>
               <div v-if="isLoggedIn()">              
-                <h1 class="masthead-heading text-uppercase mb-0">Welcome back to YummyList {{ user.name}}!</h1>
+                <h1 class="masthead-heading text-uppercase mb-0">Welcome back to YummyList, {{ user.name}}!</h1>
               </div>              
               <!-- Icon Divider-->
               <div class="divider-custom divider-light">

@@ -30,7 +30,7 @@
               <!-- List Grid Items-->
               <div class="row justify-content-center">
                   <!-- List Item -->
-                  <div id="messageCentered" v-if="noList()">
+                  <div id="listMessageCentered" v-if="noList()">
                     <h4>{{ noListMessage }}</h4>
                   </div>                   
                   <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">                  
@@ -67,9 +67,6 @@
                                       <div class="divider-custom-line"></div>
                                   </div>
                                   <!-- List Modal - Text-->
-                                  <!-- <div id="messageCentered" v-if="noRestaurants()">
-                                    <h5>{{ noRestaurantsMessage }}</h5>
-                                  </div> -->
                                   <h6>
                                     <p class="mb-4" v-for="restaurant in currentList.restaurants">{{ restaurant.restaurant_name }}
                                     <br>
@@ -78,7 +75,10 @@
                                         <i class="fas fa-times fa-fw"></i>
                                         Delete List
                                     </button>
-                                  </h6>
+                                    <!-- <div id="restaurantListMessageCentered" v-if="noRestaurants()">
+                                      <h5>{{ noRestaurantsMessage }}</h5>
+                                    </div>                                      -->
+                                  </h6>                                 
                               </div>
                           </div>
                       </div>
@@ -116,10 +116,13 @@
                       <button class="btn btn-primary btn-xl" id="submitButton" v-on:click="filter()"> Search restaurant</button>
                       <div v-for ="restaurant in filterRestaurants">
                         <br>
-                        <h6>{{ restaurant.restaurant_name }}</h6>
-                        <button v-on:click="addToList(restaurant)"> Add to list</button>
-                        <h4 {{ noRestaurantMessage }}></h4>                 
+                        <h5>{{ restaurant.restaurant_name }}</h5>
+                        <h6>{{ restaurant.address }}</h6>
+                        <button v-on:click="addToList(restaurant)"> Add to list</button>                
                       </div>
+                      <!-- <div id="restaurantMessageCentered" v-if="noRestaurantFound()">
+                        <h5>{{ noRestaurantFoundMessage }}</h5>
+                      </div>                       -->
                     </div>
                 </div>
               </div>             
@@ -239,9 +242,15 @@ padding: 2em
 #searchRestaurant {
 text-align: center
   }
-#messageCentered {
+#listMessageCentered {
 text-align: center
   }
+#restaurantListMessageCentered {
+text-align: center
+  }
+#restaurantMessageCentered {
+text-align: center
+  }  
 </style>
 
 <script>
@@ -263,7 +272,8 @@ text-align: center
         newUserParams: {},
         noRestaurantMessage: "",
         noListMessage: "",
-        noRestaurantsMessage: ""        
+        noRestaurantsMessage: "",
+        noRestaurantFoundMessage: ""
       }
     },
     created: function () {
@@ -272,6 +282,7 @@ text-align: center
       this.indexRestaurants();
       this.noList();
       this.noRestaurants();
+      this.noRestaurantFound();
       axios.get("/list_names").then((response) => {
         console.log(response.data);
         this.listNames = response.data;
@@ -303,7 +314,7 @@ text-align: center
       },
       noRestaurants: function() {
         var restaurant = this.restaurantLists
-        if(list.length == 0){
+        if(restaurant.length == 0){
           this.noRestaurantsMessage = "You have not saved any restaurants yet"
           return true
         } else {
@@ -349,6 +360,16 @@ text-align: center
           console.log(response.data);
         })
       },
+      noRestaurantFound: function() {
+        var restaurant = this.restaurants
+        if(restaurant.length == 0){
+          this.noRestaurantFoundMessage = "No restaurants found"
+          return true
+        } else {
+          this.noRestaurantFoundMessage = ""
+          return false
+        }
+      },      
       showList: function (list) {
        this.currentList = list;
       },
