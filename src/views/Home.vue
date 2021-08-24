@@ -30,7 +30,10 @@
               <!-- List Grid Items-->
               <div class="row justify-content-center">
                   <!-- List Item -->
-                  <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">
+                  <div id="messageCentered" v-if="noList()">
+                    <h4>{{ noListMessage }}</h4>
+                  </div>                   
+                  <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">                  
                     <div class ="container" id="tile_name">
                       <h6>{{ list.list_name }}</h6>
                     </div>
@@ -40,7 +43,7 @@
                             </div>
                             <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="..." />
                         </div>
-                  </div>
+                  </div>                   
               </div>
           </div>
       </section>
@@ -64,6 +67,9 @@
                                       <div class="divider-custom-line"></div>
                                   </div>
                                   <!-- List Modal - Text-->
+                                  <!-- <div id="messageCentered" v-if="noRestaurants()">
+                                    <h5>{{ noRestaurantsMessage }}</h5>
+                                  </div> -->
                                   <h6>
                                     <p class="mb-4" v-for="restaurant in currentList.restaurants">{{ restaurant.restaurant_name }}
                                     <br>
@@ -213,10 +219,10 @@
 </template>
 
 <style>
-  #search {
+#search {
 text-align: center
   }
-  #createList {
+#createList {
 text-align: center
   }
 #login {
@@ -230,7 +236,10 @@ padding: 2em
 #tile_name {
   text-align: center
 }
-  #searchRestaurant {
+#searchRestaurant {
+text-align: center
+  }
+#messageCentered {
 text-align: center
   }
 </style>
@@ -252,13 +261,17 @@ text-align: center
         newSessionParams: {},
         errors: [],
         newUserParams: {},
-        noRestaurantMessage: ""
+        noRestaurantMessage: "",
+        noListMessage: "",
+        noRestaurantsMessage: ""        
       }
     },
     created: function () {
       this.indexListNames();
       this.indexRestaurantLists();
       this.indexRestaurants();
+      this.noList();
+      this.noRestaurants();
       axios.get("/list_names").then((response) => {
         console.log(response.data);
         this.listNames = response.data;
@@ -270,13 +283,33 @@ text-align: center
           console.log("create list", response);
           this.listNames.push(response.data);
           this.newListName = {}
-        }); 
+        });
       },
       indexListNames: function() {
         axios.get("/list_names").then(response => {
           console.log(response.data);
           this.listNames = response.data
         });
+      },
+      noList: function() {
+        var list = this.listNames
+        if(list.length == 0){
+          this.noListMessage = "You have not created any lists yet"
+          return true
+        } else {
+          this.noListMessage = ""
+          return false
+        }
+      },
+      noRestaurants: function() {
+        var restaurant = this.restaurantLists
+        if(list.length == 0){
+          this.noRestaurantsMessage = "You have not saved any restaurants yet"
+          return true
+        } else {
+          this.noRestaurantsMessage = ""
+          return false
+        }
       },
       goToShowRestaurantsList: function (list) {
         this.$router.push("/list_names/" + list.id);
