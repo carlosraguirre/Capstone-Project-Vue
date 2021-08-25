@@ -120,9 +120,6 @@
                         <h6>{{ restaurant.address }}</h6>
                         <button v-on:click="addToList(restaurant)"> Add to list</button>                
                       </div>
-                      <!-- <div id="restaurantMessageCentered" v-if="noRestaurantFound()">
-                        <h5>{{ noRestaurantFoundMessage }}</h5>
-                      </div>                       -->
                     </div>
                 </div>
               </div>             
@@ -328,7 +325,7 @@ text-align: center
       indexRestaurantLists: function () {
         axios.get("/list_names/" + this.$route.params.id).then(response => {
           console.log(response.data);
-          this.restaurantLists = response.data.restaurants
+          this.restaurantLists = response.data.restaurants;
         });
       },
       indexRestaurants: function() {
@@ -358,7 +355,10 @@ text-align: center
         }
         axios.post("/restaurant_lists", params).then(response => {
           console.log(response.data);
-        })
+          window.location.reload();
+        }).then(() => {
+          alert("Restaurant successfully added to list")
+        });
       },
       noRestaurantFound: function() {
         var restaurant = this.restaurants
