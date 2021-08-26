@@ -35,7 +35,7 @@
                   </div>                   
                   <div v-for="list in listNames" class="col-md-6 col-lg-4 mb-5">                  
                     <div class ="container" id="tile_name">
-                      <h6>{{ list.list_name }}</h6>
+                      <h5>{{ list.list_name }}</h5>
                     </div>
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1" v-on:click="showList(list)">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -75,9 +75,6 @@
                                         <i class="fas fa-times fa-fw"></i>
                                         Delete List
                                     </button>
-                                    <!-- <div id="restaurantListMessageCentered" v-if="noRestaurants()">
-                                      <h5>{{ noRestaurantsMessage }}</h5>
-                                    </div>                                      -->
                                   </h6>                                 
                               </div>
                           </div>
@@ -118,7 +115,7 @@
                         <br>
                         <h5>{{ restaurant.restaurant_name }}</h5>
                         <h6>{{ restaurant.address }}</h6>
-                        <button v-on:click="addToList(restaurant)"> Add to list</button>                
+                        <button v-on:click="saveToList(restaurant)"> Save to list</button>                
                       </div>
                     </div>
                 </div>
@@ -267,10 +264,7 @@ text-align: center
         newSessionParams: {},
         errors: [],
         newUserParams: {},
-        noRestaurantMessage: "",
-        noListMessage: "",
-        noRestaurantsMessage: "",
-        noRestaurantFoundMessage: ""
+        noListMessage: ""
       }
     },
     created: function () {
@@ -278,8 +272,6 @@ text-align: center
       this.indexRestaurantLists();
       this.indexRestaurants();
       this.noList();
-      this.noRestaurants();
-      this.noRestaurantFound();
       axios.get("/list_names").then((response) => {
         console.log(response.data);
         this.listNames = response.data;
@@ -309,19 +301,9 @@ text-align: center
           return false
         }
       },
-      noRestaurants: function() {
-        var restaurant = this.restaurantLists
-        if(restaurant.length == 0){
-          this.noRestaurantsMessage = "You have not saved any restaurants yet"
-          return true
-        } else {
-          this.noRestaurantsMessage = ""
-          return false
-        }
-      },
       goToShowRestaurantsList: function (list) {
         this.$router.push("/list_names/" + list.id);
-      } ,
+      },
       indexRestaurantLists: function () {
         axios.get("/list_names/" + this.$route.params.id).then(response => {
           console.log(response.data);
@@ -341,35 +323,21 @@ text-align: center
         this.restaurants.forEach(restaurant => {
             if (restaurant.restaurant_name.includes(this.filterValue)) {
               this.filterRestaurants.push(restaurant)
-              return true
-            } else {
-              this.noRestaurantMessage = "No restaurants found"
-              return false
             }         
         });        
       },
-      addToList: function (restaurant) {
+      saveToList: function (restaurant) {
         var params = {
           restaurant_id: restaurant.id,
           list_name_id: this.listNameId
         }
-        axios.post("/restaurant_lists", params).then(response => {
+        axios.post("/restaurant_lists", params).then(response => {2
           console.log(response.data);
           window.location.reload();
         }).then(() => {
-          alert("Restaurant successfully added to list")
+          alert("Restaurant saved to list")
         });
-      },
-      noRestaurantFound: function() {
-        var restaurant = this.restaurants
-        if(restaurant.length == 0){
-          this.noRestaurantFoundMessage = "No restaurants found"
-          return true
-        } else {
-          this.noRestaurantFoundMessage = ""
-          return false
-        }
-      },      
+      },     
       showList: function (list) {
        this.currentList = list;
       },
@@ -379,6 +347,7 @@ text-align: center
           .then((response) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
             localStorage.setItem("jwt", response.data.jwt);
+            this.$router.push("#page-top");
             window.location.reload();
           })
           .catch((error) => {
