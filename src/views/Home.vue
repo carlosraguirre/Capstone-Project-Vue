@@ -137,7 +137,7 @@
               <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
               <div class="divider-custom-line"></div>     
           </div>
-          <h5>Welcome! Please sign up for an account</h5>
+          <h5>Welcome! Please sign up for an account and then login below.</h5>
           <br>
           <div class="signup">
             <form v-on:submit.prevent="submitSignup()">            
