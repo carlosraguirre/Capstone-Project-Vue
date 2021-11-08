@@ -28,7 +28,7 @@
                 <h1 class="masthead-heading text-uppercase mb-0">Welcome to YummyList!</h1>
               </div>
               <div v-if="isLoggedIn()">              
-                <h1 class="masthead-heading text-uppercase mb-0">Welcome back to YummyList, {{ user.name}}!</h1>
+                <h1 class="masthead-heading text-uppercase mb-0">Welcome back to YummyList {{ user.name}}!</h1>
               </div>              
               <!-- Icon Divider-->
               <div class="divider-custom divider-light">
