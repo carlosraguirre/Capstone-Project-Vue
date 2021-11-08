@@ -259,7 +259,7 @@ text-align: center
         filterRestaurants: {},
         filterValue: "",
         listNameId: 0,
-        restaurants: {},
+        restaurants: [],
         currentList: {},
         newSessionParams: {},
         errors: [],
